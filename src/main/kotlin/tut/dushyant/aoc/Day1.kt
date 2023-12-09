@@ -27,9 +27,9 @@ fun main() {
             size: Int -> substring(idx, (idx + size).coerceAtMost(length))
     }
 
-    println(Resources.readLines(Resources.getResource("inputs.txt"), StandardCharsets.UTF_8).sumOf { line -> calibrateValue(line) })
+    println(Resources.readLines(Resources.getResource("day1.txt"), StandardCharsets.UTF_8).sumOf { line -> calibrateValue(line) })
 
-    println(Resources.readLines(Resources.getResource("inputs.txt"), StandardCharsets.UTF_8).sumOf {
+    println(Resources.readLines(Resources.getResource("day1.txt"), StandardCharsets.UTF_8).sumOf {
         line:String -> calibrateValue(line.mapIndexedNotNull { index, c ->
         if (c.isDigit()) c else line.isDigitWord(index).firstNotNullOfOrNull { numbers[it] }
     }.joinToString())})
