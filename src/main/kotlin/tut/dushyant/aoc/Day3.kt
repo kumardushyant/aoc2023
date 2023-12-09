@@ -57,7 +57,8 @@ fun main() {
         }
     } }
 
-    /*println(symbols.map { symbol ->
+    print("Part 1 => ")
+    println(symbols.map { symbol ->
                 setOfNotNull(
                     numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx - 1),
                     numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx + 1),
@@ -69,9 +70,11 @@ fun main() {
                     numbers.getNumbersAtRowAndIdx(symbol.row + 1, symbol.idx + 1),
                     numbers.getNumbersAtRowAndIdx(symbol.row + 1, symbol.idx)
                 )
-            }.flatten().toSet().sumOf { objs -> objs.sumOf { it.value } })*/
+            }.flatten().toSet().sumOf { objs -> objs.sumOf { it.value } })
 
-    println(symbols.filter { it.value == '*' }.map { symbol ->
+    println()
+    print("Part 2 => ")
+    print(symbols.asSequence().filter { it.value == '*' }.map { symbol ->
         setOfNotNull(
             numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx - 1).getOrNull(0),
             numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx + 1).getOrNull(0),
