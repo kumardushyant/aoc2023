@@ -1,5 +1,4 @@
-import com.google.common.io.Resources
-import java.nio.charset.StandardCharsets
+import tut.dushyant.aoc.Common
 
 fun main() {
     data class Cubes(val red: Int, val blue: Int, val green: Int)
@@ -21,12 +20,12 @@ fun main() {
 
     fun powerOfGame(game: Game): Int = game.cubeSet.maxOf { it.red } * game.cubeSet.maxOf { it.blue } * game.cubeSet.maxOf { it.green }
 
-    println(parse(Resources.readLines(Resources.getResource("day2.txt"), StandardCharsets.UTF_8)).filter { game ->
+    println(parse(Common.readInputAsLines("day2.txt")).filter { game ->
         game.cubeSet.none {
             it.red > limitSet.red || it.blue > limitSet.blue || it.green > limitSet.green
         }
     }.sumOf { it.id })
 
-    print(parse(Resources.readLines(Resources.getResource("day2.txt"), StandardCharsets.UTF_8)).sumOf { powerOfGame(it) })
+    print(parse(Common.readInputAsLines("day2.txt")).sumOf { powerOfGame(it) })
 
 }

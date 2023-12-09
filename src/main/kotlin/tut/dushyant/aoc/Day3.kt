@@ -1,12 +1,5 @@
 package tut.dushyant.aoc
 
-import com.google.common.io.Resources
-import java.nio.charset.StandardCharsets
-
-fun readInput(): Array<CharArray> {
-    val lines:List<String> = Resources.readLines(Resources.getResource("day3.txt"), StandardCharsets.UTF_8)
-    return Array(lines.size) { lines[it].toCharArray() }
-}
 sealed class InputObj
 data class NumberObj(val value: Int, val row: Int, val range: IntRange): InputObj() {
 
@@ -28,7 +21,7 @@ fun main() {
         .filter { it.row == rowIndex }
         .filter { it.range.contains(columnIdx) }
 
-    readInput().forEachIndexed { rowIdx,row -> run {
+    Common.readInputAsArray("day3.txt").forEachIndexed { rowIdx,row -> run {
         var startIdx = -1
         var currentNum = ""
         row.forEachIndexed { index, c ->

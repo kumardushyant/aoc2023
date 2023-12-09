@@ -1,11 +1,5 @@
 package tut.dushyant.aoc
 
-import com.google.common.io.Resources
-import java.nio.charset.StandardCharsets
-
-
-
-
 fun main() {
     val numbers: Map<String, Int> = mapOf(
         "one" to 1,
@@ -27,9 +21,9 @@ fun main() {
             size: Int -> substring(idx, (idx + size).coerceAtMost(length))
     }
 
-    println(Resources.readLines(Resources.getResource("day1.txt"), StandardCharsets.UTF_8).sumOf { line -> calibrateValue(line) })
+    println(Common.readInputAsLines("day1.txt").sumOf { calibrateValue(it) })
 
-    println(Resources.readLines(Resources.getResource("day1.txt"), StandardCharsets.UTF_8).sumOf {
+    println(Common.readInputAsLines("day1.txt").sumOf {
         line:String -> calibrateValue(line.mapIndexedNotNull { index, c ->
         if (c.isDigit()) c else line.isDigitWord(index).firstNotNullOfOrNull { numbers[it] }
     }.joinToString())})
