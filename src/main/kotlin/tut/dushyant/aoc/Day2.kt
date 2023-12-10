@@ -20,12 +20,15 @@ fun main() {
 
     fun powerOfGame(game: Game): Int = game.cubeSet.maxOf { it.red } * game.cubeSet.maxOf { it.blue } * game.cubeSet.maxOf { it.green }
 
-    println(parse(Common.readInputAsLines("day2.txt")).filter { game ->
+    println()
+    print("Part 1 => ")
+    parse(Common.readInputAsLines("day2.txt")).filter { game ->
         game.cubeSet.none {
             it.red > limitSet.red || it.blue > limitSet.blue || it.green > limitSet.green
         }
-    }.sumOf { it.id })
+    }.sumOf { it.id }.also(::println)
 
-    print(parse(Common.readInputAsLines("day2.txt")).sumOf { powerOfGame(it) })
+    print("Part 2 => ")
+    parse(Common.readInputAsLines("day2.txt")).sumOf { powerOfGame(it) }.also(::println)
 
 }

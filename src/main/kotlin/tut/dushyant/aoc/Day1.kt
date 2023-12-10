@@ -21,11 +21,14 @@ fun main() {
             size: Int -> substring(idx, (idx + size).coerceAtMost(length))
     }
 
-    println(Common.readInputAsLines("day1.txt").sumOf { calibrateValue(it) })
+    println()
+    print("Part 1 => ")
+    Common.readInputAsLines("day1.txt").sumOf { calibrateValue(it) }.also(::println)
 
-    println(Common.readInputAsLines("day1.txt").sumOf {
+    print("Part 2 => ")
+    Common.readInputAsLines("day1.txt").sumOf {
         line:String -> calibrateValue(line.mapIndexedNotNull { index, c ->
         if (c.isDigit()) c else line.isDigitWord(index).firstNotNullOfOrNull { numbers[it] }
-    }.joinToString())})
+    }.joinToString())}.also(::println)
 }
 

@@ -51,7 +51,7 @@ fun main() {
     } }
 
     print("Part 1 => ")
-    println(symbols.map { symbol ->
+    symbols.map { symbol ->
                 setOfNotNull(
                     numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx - 1),
                     numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx + 1),
@@ -63,11 +63,10 @@ fun main() {
                     numbers.getNumbersAtRowAndIdx(symbol.row + 1, symbol.idx + 1),
                     numbers.getNumbersAtRowAndIdx(symbol.row + 1, symbol.idx)
                 )
-            }.flatten().toSet().sumOf { objs -> objs.sumOf { it.value } })
+            }.flatten().toSet().sumOf { objs -> objs.sumOf { it.value } }.also(::println)
 
-    println()
     print("Part 2 => ")
-    print(symbols.asSequence().filter { it.value == '*' }.map { symbol ->
+    symbols.asSequence().filter { it.value == '*' }.map { symbol ->
         setOfNotNull(
             numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx - 1).getOrNull(0),
             numbers.getNumbersAtRowAndIdx(symbol.row, symbol.idx + 1).getOrNull(0),
@@ -79,6 +78,6 @@ fun main() {
             numbers.getNumbersAtRowAndIdx(symbol.row + 1, symbol.idx + 1).getOrNull(0),
             numbers.getNumbersAtRowAndIdx(symbol.row + 1, symbol.idx).getOrNull(0)
         )
-    }.filter { objs -> objs.size == 2 }.map { it.fold(1){ acc, next -> acc * next.value } }.sum())
+    }.filter { objs -> objs.size == 2 }.map { it.fold(1){ acc, next -> acc * next.value } }.sum().also(::println)
 
 }
