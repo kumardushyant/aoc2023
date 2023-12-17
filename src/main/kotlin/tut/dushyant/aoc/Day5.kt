@@ -49,47 +49,50 @@ fun getData(inpFile: String): List<Any> {
 }
 
 
-private fun generateSeedLinkedList(seed: Long, mapInputs: List<MapInput>): List<ListElement> {
-
-    var start: Long = seed
-
-    return mapInputs.map {mapInput ->
-        val listElem = ListElement(mapInput.sourceType, start)
-        start = mapInput.values.sumOf {
-            if ((start >= it[1]) && (start < (it[1] + it[2])))
-                it[0] + (start - it[1])
+/*private fun generateSeedLinkedList(seed: Long, mapInputs: List<MapInput>): Long =
+    mapInputs.fold(seed) { acc, mapInput ->
+        mapInput.values.sumOf {
+            if ((acc >= it[1]) && (acc < (it[1] + it[2])))
+                it[0] + (acc - it[1])
             else
                 0
         }.let {
-            if (it.toInt() == 0) start else it
+            if (it.toInt() == 0) acc else it
         }
-        listElem
-    }.plus(ListElement(Type.LOCATION,start))
+    }*/
+
+
+fun part1(data:List<Any>) : Long = (data[0] as List<*>).map { it.toString().toLong() }.fold(Long.MAX_VALUE){ acc,seed ->
+    val genMin = findMin(data, seed)
+    if (genMin <= acc) genMin else acc
 }
 
-fun part1(data:List<Any>): Long = (data[0] as List<*>).map { it.toString().toLong() }.map { seed ->
-        generateSeedLinkedList(seed, data.drop(1).map { it as MapInput })
-            .filter {
-            it.type == Type.LOCATION
-        }.map {
-            it.value
-        }
-    }.flatten().min()
+fun part2(data: List<Any>): Long = (data[0] as List<*>).map {
+    it.toString().toLong()
+}.toList().chunked(2).minOf { pair ->
+    (pair[0]..(pair[0] + pair[1])).toList().fold(Long.MAX_VALUE){acc: Long, seed: Long ->
+        val genMin = findMin(data, seed)
+        if(genMin <= acc) genMin else acc
+    }
+}
 
-fun part2(data:List<Any>): Long = (data[0] as List<*>).map { it.toString().toLong() }.toList().chunked(2).map { pair ->
-        (pair[0]..(pair[0]+pair[1])).toList().parallelStream().map {seed ->
-            generateSeedLinkedList(seed, data.drop(1).map { it as MapInput }).filter {
-                it.type == Type.LOCATION
-            }.map {
-                it.value
-            }
-        }.toList().flatten()
-    }.flatten().min()
+private fun findMin(data: List<Any>, seed: Long): Long {
+    val genMin = data.drop(1).map { it as MapInput }.fold(seed) { acc, mapInput ->
+        mapInput.values.sumOf {
+            if ((acc >= it[1]) && (acc < (it[1] + it[2])))
+                it[0] + (acc - it[1])
+            else
+                0
+        }.let {
+            if (it.toInt() == 0) acc else it
+        }
+    }
+    return genMin
+}
 
 fun main() {
     val data:List<Any> = getData("day5.txt")
 
     println(part1(data))
-
     println(part2(data))
 }
